@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 import com.voucher.manage.daoSQL.annotations.*;
 
-@DBTable(name="[YTRoomManage].[dbo].[Role]")
+@DBTable(name="[Role]")
 public class Role implements Serializable{
 
     private static final long serialVersionUID = 1L;
@@ -180,8 +180,29 @@ public class Role implements Serializable{
     @SQLBoolean(name="complexquery")
 	private Boolean complexquery;
 
-    @SQLBoolean(name="HireUpdate")
-	private Boolean HireUpdate;
+    @SQLBoolean(name="chartquery")
+	private Boolean chartquery;
+
+    @SQLBoolean(name="hirelisttotal")
+	private Boolean hirelisttotal;
+
+    @SQLBoolean(name="hirephyear")
+	private Boolean hirephyear;
+
+    @SQLBoolean(name="hirelistft")
+	private Boolean hirelistft;
+
+    @SQLBoolean(name="depreciation")
+	private Boolean depreciation;
+
+    @SQLBoolean(name="messagecase")
+	private Boolean messagecase;
+
+    @SQLBoolean(name="HireList")
+	private Boolean HireList;
+
+    @SQLBoolean(name="Evaluation")
+	private Boolean Evaluation;
 
 	public void setGUID(String GUID){
 		this.GUID = GUID;
@@ -639,12 +660,68 @@ public class Role implements Serializable{
 		return complexquery;
 	}
 
-	public void setHireUpdate(Boolean HireUpdate){
-		this.HireUpdate = HireUpdate;
+	public void setChartquery(Boolean chartquery){
+		this.chartquery = chartquery;
 	}
 
-	public Boolean getHireUpdate(){
-		return HireUpdate;
+	public Boolean getChartquery(){
+		return chartquery;
+	}
+
+	public void setHirelisttotal(Boolean hirelisttotal){
+		this.hirelisttotal = hirelisttotal;
+	}
+
+	public Boolean getHirelisttotal(){
+		return hirelisttotal;
+	}
+
+	public void setHirephyear(Boolean hirephyear){
+		this.hirephyear = hirephyear;
+	}
+
+	public Boolean getHirephyear(){
+		return hirephyear;
+	}
+
+	public void setHirelistft(Boolean hirelistft){
+		this.hirelistft = hirelistft;
+	}
+
+	public Boolean getHirelistft(){
+		return hirelistft;
+	}
+
+	public void setDepreciation(Boolean depreciation){
+		this.depreciation = depreciation;
+	}
+
+	public Boolean getDepreciation(){
+		return depreciation;
+	}
+
+	public void setMessagecase(Boolean messagecase){
+		this.messagecase = messagecase;
+	}
+
+	public Boolean getMessagecase(){
+		return messagecase;
+	}
+
+	public void setHireList(Boolean HireList){
+		this.HireList = HireList;
+	}
+
+	public Boolean getHireList(){
+		return HireList;
+	}
+
+	public void setEvaluation(Boolean Evaluation){
+		this.Evaluation = Evaluation;
+	}
+
+	public Boolean getEvaluation(){
+		return Evaluation;
 	}
 
 

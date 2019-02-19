@@ -12,7 +12,7 @@ import com.voucher.manage.tools.MyTestUtil;
 public class Singleton {
 	private static Singleton instance = new Singleton();
 		
-	public final static String ROOMDATABASE="[YTRoomManage]";
+	public final static String ROOMDATABASE="[test]";
 	
 	//本地文件目录
 	public final static String filePath="\\Desktop\\pasoft\\photo";

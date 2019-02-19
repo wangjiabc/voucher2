@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 import com.voucher.manage.daoSQL.annotations.*;
 
-@DBTable(name="[YTRoomManage].[dbo].[RoomCoordinate]")
+@DBTable(name="[RoomCoordinate]")
 public class RoomCoordinate implements Serializable{
 
     private static final long serialVersionUID = 1L;

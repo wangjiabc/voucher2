@@ -8,7 +8,7 @@ import java.io.Serializable;
 
 import com.voucher.manage.daoSQL.annotations.*;
 
-@DBTable(name="[YTRoomManage].[dbo].[RoomBackOutLog]")
+@DBTable(name="[RoomBackOutLog]")
 public class RoomBackOutLog implements Serializable{
 
     private static final long serialVersionUID = 1L;
@@ -54,9 +54,6 @@ public class RoomBackOutLog implements Serializable{
 
     @SQLString(name="sMemo")
 	private String sMemo;
-
-    @SQLString(name="Express")
-	private String Express;
 
 	public void setGUID(String GUID){
 		this.GUID = GUID;
@@ -168,14 +165,6 @@ public class RoomBackOutLog implements Serializable{
 
 	public String getSMemo(){
 		return sMemo;
-	}
-
-	public void setExpress(String Express){
-		this.Express = Express;
-	}
-
-	public String getExpress(){
-		return Express;
 	}
 
 

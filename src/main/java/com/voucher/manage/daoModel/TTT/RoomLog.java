@@ -8,7 +8,7 @@ import java.io.Serializable;
 
 import com.voucher.manage.daoSQL.annotations.*;
 
-@DBTable(name="[YTRoomManage].[dbo].[RoomLog]")
+@DBTable(name="[RoomLog]")
 public class RoomLog implements Serializable{
 
     private static final long serialVersionUID = 1L;
@@ -42,12 +42,6 @@ public class RoomLog implements Serializable{
 
     @SQLString(name="ParentGUID")
 	private String ParentGUID;
-
-    @SQLString(name="ChartGUID")
-	private String ChartGUID;
-
-    @SQLString(name="Express")
-	private String Express;
 
 	public void setGUID(String GUID){
 		this.GUID = GUID;
@@ -127,22 +121,6 @@ public class RoomLog implements Serializable{
 
 	public String getParentGUID(){
 		return ParentGUID;
-	}
-
-	public void setChartGUID(String ChartGUID){
-		this.ChartGUID = ChartGUID;
-	}
-
-	public String getChartGUID(){
-		return ChartGUID;
-	}
-
-	public void setExpress(String Express){
-		this.Express = Express;
-	}
-
-	public String getExpress(){
-		return Express;
 	}
 
 

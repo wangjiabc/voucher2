@@ -3,6 +3,10 @@ package com.voucher.manage.daoImpl;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.voucher.manage.daoModel.Aaa;
+import com.voucher.manage.daoSQL.InsertExe;
+import com.voucher.manage.daoSQL.UpdateExe;
+import org.apache.ibatis.annotations.Insert;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
@@ -76,6 +80,17 @@ public class AffairDAOImpl extends JdbcDaoSupport implements AffairDAO{
 		Affair affair=new Affair();
 		affair.setAmount(i);
 		return affair;
+	}
+
+	@Override
+	public int insertA(Aaa aaa) {
+
+		return InsertExe.get(this.getJdbcTemplate(),aaa);
+	}
+
+	@Override
+	public int update(Aaa aaa) {
+		return UpdateExe.get(this.getJdbcTemplate(),aaa);
 	}
 
 	@Override

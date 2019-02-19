@@ -1,4 +1,4 @@
-﻿package com.voucher.manage.serviceImpl;
+package com.voucher.manage.serviceImpl;
 
 import java.util.Date;
 import java.util.List;
@@ -18,64 +18,64 @@ import com.voucher.manage.service.SellerService;
 @Service("sellerService")
 public class SellerServiceImpl implements SellerService {
 
-	private SellerMapper sellerMapper;//操作用户信息
+    private SellerMapper sellerMapper;//操作用户信息
 
-	@Autowired
-	public void setSellerMapper(SellerMapper sellerMapper) {
-		this.sellerMapper = sellerMapper;
-	}
-
-
-
-	
-	public Sellers selectByCampusAdmin(String campusAdmin) {
-		return sellerMapper.selectByCampusAdmin(campusAdmin);
-	}
+    @Autowired
+    public void setSellerMapper(SellerMapper sellerMapper) {
+        this.sellerMapper = sellerMapper;
+    }
 
 
-	public void updateLastLoginTime(Date date, String campusAdmin) {
-		sellerMapper.updateLastLoginTime(date,campusAdmin);
-		
-	}
-	
-	public void addASeller(Sellers seller)
-	{
-		sellerMapper.insertSellective(seller);
-	}
 
 
-	public Sellers selectByCampusId(String campusAdmin) {
-		// TODO Auto-generated method stub
-		return sellerMapper.selectByCampusId(campusAdmin);
-	}
+    public Sellers selectByCampusAdmin(String campusAdmin) {
+        return sellerMapper.selectByCampusAdmin(campusAdmin);
+    }
+
+
+    public void updateLastLoginTime(Date date, String campusAdmin) {
+        sellerMapper.updateLastLoginTime(date,campusAdmin);
+
+    }
+
+    public void addASeller(Sellers seller)
+    {
+        sellerMapper.insertSellective(seller);
+    }
+
+
+    public Sellers selectByCampusId(String campusAdmin) {
+        // TODO Auto-generated method stub
+        return sellerMapper.selectByCampusId(campusAdmin);
+    }
 
     public List<Sellers> getCampusAdmin(String campusAdmin) {
-		return sellerMapper.getCampusAdmin(campusAdmin);
-	}
+        return sellerMapper.getCampusAdmin(campusAdmin);
+    }
 
-	@Override
-	public List<Sellers> getAllCampusAdmin() {
-		// TODO Auto-generated method stub
-		return sellerMapper.getAllCampusAdmin();
-	}
+    @Override
+    public List<Sellers> getAllCampusAdmin() {
+        // TODO Auto-generated method stub
+        return sellerMapper.getAllCampusAdmin();
+    }
 
     /*
      * (non-Javadoc)
      * @see com.voucher.manage.service.SellerService#selectRepeatAdmin(java.lang.String)
      * 查找重复用户名
      */
-	@Override
-	public int selectRepeatAdmin(String campusAdmin) {
-		// TODO Auto-generated method stub
-		return sellerMapper.selectRepeatAdmin(campusAdmin);
-	}
+    @Override
+    public int selectRepeatAdmin(String campusAdmin) {
+        // TODO Auto-generated method stub
+        return sellerMapper.selectRepeatAdmin(campusAdmin);
+    }
 
 
 
 
-	@Override
-	public int selectMaxCityId() {
-		// TODO Auto-generated method stub
-		return sellerMapper.selectMaxCityId();
-	}
+    @Override
+    public int selectMaxCityId() {
+        // TODO Auto-generated method stub
+        return sellerMapper.selectMaxCityId();
+    }
 }

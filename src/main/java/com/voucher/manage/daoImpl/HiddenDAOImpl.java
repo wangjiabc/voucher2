@@ -536,7 +536,7 @@ public class HiddenDAOImpl extends JdbcDaoSupport implements HiddenDAO{
 							"and convert(varchar(11),"+"[Hidden_Check].date ,120 )<='"+endTime+"' "+
 						    "and [Hidden_Check].exist=1 "+
 						    "group by "+Singleton.ROOMDATABASE+".[dbo].[RoomInfo].GUID ) t1 "+
-						    "on t1.GUID=[YTRoomManage].[dbo].[RoomInfo].GUID " +
+						    "on t1.GUID="+Singleton.ROOMDATABASE+".[dbo].[RoomInfo].GUID " +
 							"left join  [Position] "+
 							"on "+Singleton.ROOMDATABASE+".[dbo].[RoomInfo].GUID = [Position].GUID "+
 							"WHERE c is null "+
@@ -554,7 +554,7 @@ public class HiddenDAOImpl extends JdbcDaoSupport implements HiddenDAO{
 					    "and convert(varchar(11),"+"[dbo].[Hidden_Check].date ,120 )<='"+endTime+"' "+
 					    "and [Hidden_Check].exist=1 "+
 						"group by "+Singleton.ROOMDATABASE+".[dbo].[RoomInfo].GUID ) t1 "+
-						"on t1.GUID=[YTRoomManage].[dbo].[RoomInfo].GUID " +
+						"on t1.GUID="+Singleton.ROOMDATABASE+".[dbo].[RoomInfo].GUID " +
 						"left join  [Position] "+
 						"on "+Singleton.ROOMDATABASE+".[dbo].[RoomInfo].GUID = [Position].GUID "+
 						"WHERE c is null "+

@@ -1,43 +1,24 @@
 package voucher;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import javax.annotation.Resource;
-import javax.servlet.ServletRequest;
-import javax.servlet.http.HttpServletRequest;
-
-import org.apache.ibatis.session.SqlSession;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import com.voucher.manage.service.AffairService;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.beans.factory.config.BeanPostProcessor;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
-import org.springframework.http.HttpRequest;
-import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
-import org.springframework.test.context.ContextConfiguration;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
-import com.fasterxml.jackson.databind.util.BeanUtil;
-import com.voucher.manage.mapper.AffairMapper;
-import com.voucher.manage.model.Affair;
-import com.voucher.manage.service.AffairService;
-import com.voucher.manage.serviceImpl.AffairServiceImpl;  
+import javax.servlet.ServletRequest;
+import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
+import java.util.Map;
 
 @Configuration
 @ComponentScan
 public class MybatisConn {
 	
   private AffairService affairService;
-	
+
   @Autowired
   public void setAffairService(AffairService affairService) {
 	this.affairService=affairService;

@@ -1,4 +1,4 @@
-﻿package com.voucher.manage.mapper;
+package com.voucher.manage.mapper;
 
 import java.util.List;
 import java.util.Map;
@@ -20,32 +20,32 @@ public interface CampusMapper {
     int updateByPrimaryKey(Campus record);
 
     List<Campus> selectAllCampus(Map<String, Object> paramMap);
-    
+
     List<Campus> selectAllFullCampus(Map<String, Object> paramMap);
 
-	Integer getIdByName(Map<String, Object> paramMap);
-	
-	Integer closeCampus(Map<String, Object> requestMap);
-	
-	Campus selectCampusById(Map<String, Object> paramMap);
-	
-	CampusAdmin getCampusIdByAdmin(Map<String, Object> paramMap);
-	
-	List<CampusAdmin> getAllCampusAdmin(Map<String, Object> paramMap);
+    Integer getIdByName(Map<String, Object> paramMap);
 
-	Integer updateCampusAdmin(Map<String, Object> paramMap);
-	
-	Integer addCampus(Map<String, Object> paramMap);
+    Integer closeCampus(Map<String, Object> requestMap);
 
-	Campus getCampusByOrder(Map<String, Object> paramMap);
-	
-	Integer deleteCampusAdmin(Map<String, Object> paramMap);
-	
-	Integer insertCampusAdmin(Map<String, Object> paramMap);
-	
-	Integer insertCity(Map<String, Object> paramMap);
-	
-	Integer updateCampus(Map<String, Object> paramMap);
+    Campus selectCampusById(Map<String, Object> paramMap);
 
-	String getCampusName(Integer campusId);
+    CampusAdmin getCampusIdByAdmin(Map<String, Object> paramMap);
+
+    List<CampusAdmin> getAllCampusAdmin(Map<String, Object> paramMap);
+
+    Integer updateCampusAdmin(Map<String, Object> paramMap);
+
+    Integer addCampus(Map<String, Object> paramMap);
+
+    Campus getCampusByOrder(Map<String, Object> paramMap);
+
+    Integer deleteCampusAdmin(Map<String, Object> paramMap);
+
+    Integer insertCampusAdmin(Map<String, Object> paramMap);
+
+    Integer insertCity(Map<String, Object> paramMap);
+
+    Integer updateCampus(Map<String, Object> paramMap);
+
+    String getCampusName(Integer campusId);
 }

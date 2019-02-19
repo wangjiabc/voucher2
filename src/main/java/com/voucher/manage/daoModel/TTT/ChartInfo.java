@@ -6,7 +6,7 @@ import java.io.Serializable;
 
 import com.voucher.manage.daoSQL.annotations.*;
 
-@DBTable(name="[YTRoomManage].[dbo].[ChartInfo]")
+@DBTable(name="[ChartInfo]")
 public class ChartInfo implements Serializable{
 
     private static final long serialVersionUID = 1L;
@@ -116,8 +116,8 @@ public class ChartInfo implements Serializable{
     @SQLString(name="Memo")
 	private String Memo;
 
-    @SQLInteger(name="IsHistory")
-	private Integer IsHistory;
+    @SQLBoolean(name="IsHistory")
+	private Boolean IsHistory;
 
     @SQLString(name="Region")
 	private String Region;
@@ -154,15 +154,6 @@ public class ChartInfo implements Serializable{
 
     @SQLString(name="Manager")
 	private String Manager;
-
-    @SQLString(name="DangerClassification")
-	private String DangerClassification;
-
-    @SQLString(name="NSRSBH")
-	private String NSRSBH;
-
-    @SQLString(name="KHH")
-	private String KHH;
 
 	public void setGUID(String GUID){
 		this.GUID = GUID;
@@ -444,11 +435,11 @@ public class ChartInfo implements Serializable{
 		return Memo;
 	}
 
-	public void setIsHistory(Integer IsHistory){
+	public void setIsHistory(Boolean IsHistory){
 		this.IsHistory = IsHistory;
 	}
 
-	public Integer getIsHistory(){
+	public Boolean getIsHistory(){
 		return IsHistory;
 	}
 
@@ -546,30 +537,6 @@ public class ChartInfo implements Serializable{
 
 	public String getManager(){
 		return Manager;
-	}
-
-	public void setDangerClassification(String DangerClassification){
-		this.DangerClassification = DangerClassification;
-	}
-
-	public String getDangerClassification(){
-		return DangerClassification;
-	}
-
-	public void setNSRSBH(String NSRSBH){
-		this.NSRSBH = NSRSBH;
-	}
-
-	public String getNSRSBH(){
-		return NSRSBH;
-	}
-
-	public void setKHH(String KHH){
-		this.KHH = KHH;
-	}
-
-	public String getKHH(){
-		return KHH;
 	}
 
 

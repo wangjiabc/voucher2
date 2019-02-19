@@ -6,7 +6,7 @@ import java.io.Serializable;
 
 import com.voucher.manage.daoSQL.annotations.*;
 
-@DBTable(name="[YTRoomManage].[dbo].[HireList]")
+@DBTable(name="[HireList]")
 public class HireList implements Serializable{
 
     private static final long serialVersionUID = 1L;
@@ -55,6 +55,12 @@ public class HireList implements Serializable{
 
     @SQLString(name="OptAddUser")
 	private String OptAddUser;
+
+    @SQLDateTime(name="OverDueDate")
+	private Date OverDueDate;
+
+    @SQLString(name="open_id")
+	private String open_id;
 
 	public void setGUID(String GUID){
 		this.GUID = GUID;
@@ -174,6 +180,22 @@ public class HireList implements Serializable{
 
 	public String getOptAddUser(){
 		return OptAddUser;
+	}
+
+	public void setOverDueDate(Date OverDueDate){
+		this.OverDueDate = OverDueDate;
+	}
+
+	public Date getOverDueDate(){
+		return OverDueDate;
+	}
+
+	public void setOpen_id(String open_id){
+		this.open_id = open_id;
+	}
+
+	public String getOpen_id(){
+		return open_id;
 	}
 
 

@@ -4,13 +4,13 @@ import java.io.Serializable;
 
 import com.voucher.manage.daoSQL.annotations.*;
 
-@DBTable(name="[YTRoomManage].[dbo].[SendMessage]")
+@DBTable(name="[SendMessage]")
 public class SendMessage implements Serializable{
 
     private static final long serialVersionUID = 1L;
 
-    @SQLString(name="ID")
-	private Integer ID;
+	@SQLInteger(name="id")
+	private Integer id;
 
     @SQLString(name="Phone")
 	private String Phone;
@@ -42,12 +42,12 @@ public class SendMessage implements Serializable{
     @SQLString(name="ChartGUID")
 	private String ChartGUID;
 
-	public void setID(Integer ID){
-		this.ID = ID;
+	public Integer getId() {
+		return id;
 	}
 
-	public Integer getID(){
-		return ID;
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
 	public void setPhone(String Phone){

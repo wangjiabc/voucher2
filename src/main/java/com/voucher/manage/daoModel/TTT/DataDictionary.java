@@ -4,13 +4,13 @@ import java.io.Serializable;
 
 import com.voucher.manage.daoSQL.annotations.*;
 
-@DBTable(name="[YTRoomManage].[dbo].[DataDictionary]")
+@DBTable(name="[DataDictionary]")
 public class DataDictionary implements Serializable{
 
     private static final long serialVersionUID = 1L;
 
-    @SQLString(name="ID")
-	private Integer ID;
+	@SQLInteger(name="id")
+	private Integer id;
 
     @SQLString(name="item")
 	private String item;
@@ -18,12 +18,12 @@ public class DataDictionary implements Serializable{
     @SQLString(name="Content")
 	private String Content;
 
-	public void setID(Integer ID){
-		this.ID = ID;
+	public Integer getId() {
+		return id;
 	}
 
-	public Integer getID(){
-		return ID;
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
 	public void setItem(String item){

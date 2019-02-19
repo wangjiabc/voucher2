@@ -4,13 +4,13 @@ import java.io.Serializable;
 
 import com.voucher.manage.daoSQL.annotations.*;
 
-@DBTable(name="[YTRoomManage].[dbo].[FileRalate]")
+@DBTable(name="[FileRalate]")
 public class FileRalate implements Serializable{
 
     private static final long serialVersionUID = 1L;
 
-    @SQLString(name="ID")
-	private Integer ID;
+	@SQLInteger(name="id")
+	private Integer id;
 
     @SQLString(name="LogGUID")
 	private String LogGUID;
@@ -28,11 +28,11 @@ public class FileRalate implements Serializable{
 	private String ParentGUID;
 
 	public void setID(Integer ID){
-		this.ID = ID;
+		this.id = ID;
 	}
 
 	public Integer getID(){
-		return ID;
+		return id;
 	}
 
 	public void setLogGUID(String LogGUID){

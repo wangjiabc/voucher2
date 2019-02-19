@@ -405,7 +405,14 @@ public class testController {
             System.out.println("复制单个文件操作出错"); 
             e.printStackTrace(); 
         } 
-    } 
-       
+    }
+
+
+	@RequestMapping(value="selectHidden")
+	public  @ResponseBody Map selectHidden(){
+
+    	return  hiddenDAO.selectAllHiddenCheck(10,0,null,null,"",new HashMap<>());
+
+	}
     
 }
