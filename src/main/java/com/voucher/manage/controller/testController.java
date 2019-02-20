@@ -88,9 +88,7 @@ public class testController {
 	@RequestMapping("/aaa")
 	public @ResponseBody
 	String aaa() {
-		
 		return "aaa";
-		 
 	}
 	
 	
