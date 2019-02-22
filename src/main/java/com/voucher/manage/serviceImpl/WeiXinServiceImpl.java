@@ -1,19 +1,19 @@
 package com.voucher.manage.serviceImpl;
 
-import java.util.List;
-import java.util.Map;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import com.voucher.manage.mapper.MessageListMapper;
 import com.voucher.manage.mapper.WeiXinMapper;
 import com.voucher.manage.model.MessageList;
 import com.voucher.manage.model.WeiXin;
 import com.voucher.manage.service.WeiXinService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Map;
 
 
-@Service("weixinService")
+//@Service("weixinService")
+@Service
 public class WeiXinServiceImpl implements WeiXinService{
 
     private WeiXinMapper weixinMapper;
