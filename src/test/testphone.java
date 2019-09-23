@@ -15,8 +15,10 @@ public class testphone {
 	     }
 	 
 	 public static void main(String[] args) {
-	    Scanner scanner=new Scanner(System.in);
-	    String a=scanner.nextLine();
-	    System.out.println(isPhone(a));
+	    //Scanner scanner=new Scanner(System.in);
+	    //String a=scanner.nextLine();
+	    //System.out.println(isPhone(a));
+		 
+		 System.out.print(Math.sqrt(Math.pow(5-2, 2)));
   	}
 }

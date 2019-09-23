@@ -11,7 +11,7 @@ xmlns:task="http://www.springframework.org/schema/task"
 	<!-- 引入属性文件  注意两个都要加上ignore-unresolvable="true"，一个加另一个不加也是不行的-->
 	<context:property-placeholder location="classpath:config.properties" ignore-unresolvable="true"/>
     <context:property-placeholder location="classpath:jdbc.properties" ignore-unresolvable="true"  />
-    <context:property-placeholder location="classpath:redis.properties" ignore-unresolvable="true"  />
+    <context:property-placeholder location="classpath:spring-redis.properties" ignore-unresolvable="true"  />
 	
 	<!-- 自动扫描(自动注入) -->
 	<context:component-scan base-package="com.voucher.manage.service" />

@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<script type="text/javascript" src="js/jquery.js"></script>
+<title>Insert title here</title>
+</head>
+<body>
+	<div >
+		
+		<div class="modal-header">
+			<h4 class="modal-title">选择excel文件</h4>
+		</div>
+		
+		<div  style="width:100%;">
+		
+		<div style="width:15%;float:left;">
+			<div id="preview_box"></div>
+			<div class="modal-body">
+				<input id="img_input"  type="file" accept=".xlsx,.xls" />
+			</div>			
+		</div>
+		
+		<div style="width:10%;float:left;">
+			<div class="modal-footer">
+				<button type="button" onclick="upload();" class="btn btn-primary">提交更改</button>
+			</div>
+		</div>
+		
+		<div style="width:25%;float:left;">
+			<div class="modal-footer">
+				<button type="button" onclick="addTable();" class="btn btn-primary">添加表</button>
+			</div>			
+		</div>
+	
+		<div style="width:10%;float:left;">
+				<span>开始行</span><input id="start" style="width:50px" type="number" />
+		</div>
+		
+		<div style="width:10%;float:left;">
+				<span>结束行</span><input id="end" style="width:70px" type="number" />
+		</div>
+	
+		<div style="width:25%;float:left;">
+			<div>
+				<button type="button" onclick="execute();" class="btn btn-primary">执行写入</button>
+			</div>
+		</div>
+		
+		</div>
+	</div>
+
+	<div>
+		<div id="DvelopmentExcel"></div>		
+	</div>
+		
+	<div id="main" style="width:100%;" >
+			<div id="DvelopmentTarget"></div>		
+	</div>
+
+
+		
+</body>
+ <script type="text/javascript">
+ 
+
+		var exceldata = [];
+
+		var allTable;
+		
+		var xhr = new XMLHttpRequest();
+		xhr.open("GET", "/voucher/excel/getTableNames.do");
+		xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+		xhr.send();
+		xhr.onreadystatechange = function() {
+			if (xhr.readyState == 4 && xhr.status == 200) {
+					var b = JSON.parse(xhr.responseText);
+					allTable=b;
+					console.log(xhr.responseText);
+					console.log(allTable);
+			}
+		}
+
+		var tablenumber=0;
+		
+		var parames=new Object();
+		
+		function execute(){
+			var json=JSON.stringify(parames);
+			console.log(json);
+			var limitLine=document.getElementById("start").value
+			var offsetLine=document.getElementById("end").value
+			console.log("limitLine="+limitLine);
+			console.log("offsetLine="+offsetLine);
+			$.ajax({
+			      type: "POST",
+			      url: "/voucher/excel/intoList.do",
+			      data: { 
+			    	  "json":json,
+			    	  limitLine:limitLine,
+			    	  offsetLine:offsetLine
+			    	  },
+			      dataType: "json",
+			      error: function (request){
+			   	   console.log(request);
+			      },
+			      success: function (text) {
+			    	  	  alert(text.result);
+			      }
+			});
+		}
+		
+		function addTable() {
+			var div = document.createElement("div");
+			div.setAttribute("style", "width:50%;float:left;");
+			var div2 = document.createElement("div");
+			div2.setAttribute("class", "modal-header");
+			var h4 = document.createElement("h4");
+			h4.innerText = "数据表"+tablenumber;
+			div2.appendChild(h4);
+			div.appendChild(div2);
+			
+			var currentselect="select"+tablenumber;
+			var currentDvelopmentTarget="DvelopmentTarget"+tablenumber;
+			
+			// 创建一个DOM元素
+			var select = document.createElement("select");
+			select.setAttribute("id", currentselect);
+
+			var option = document.createElement("option");
+			option.innerHTML = " ";
+			option.setAttribute("value", "");
+			select.appendChild(option);
+			console.log(allTable);
+			for (var i = 0; i < allTable.length; i++) {
+				var option = document.createElement("option");
+				option.innerHTML = allTable[i];
+				option.setAttribute("value", allTable[i]);
+				select.appendChild(option);
+			}
+			select.setAttribute("onchange", "gradeChange('"+currentselect+"','"+currentDvelopmentTarget+"')");
+			div.appendChild(select);
+			var div3 = document.createElement("div");
+			div3.setAttribute("id", currentDvelopmentTarget);
+			div.appendChild(div3);
+			var main = document.getElementById("main");
+			main.appendChild(div);
+			tablenumber++;
+		}
+		
+
+		function gradeChange(selectnum, DvelopmentTarget) {
+			document.getElementById(DvelopmentTarget).innerHTML = "";
+			var objS1 = document.getElementById(selectnum);
+			var grade1 = objS1.options[objS1.selectedIndex].value;
+			console.log(grade1);
+			var tableName = encodeURI(encodeURI(grade1));
+
+			var xhr = new XMLHttpRequest();
+			xhr.open("get", "/voucher/excel/getTableColumns.do?tableName="
+					+ tableName, true);
+			xhr.send();
+			xhr.onreadystatechange = function() {
+				if (xhr.readyState == 4 && xhr.status == 200) {
+					var b = JSON.parse(xhr.responseText);
+					var data = b;
+					var div = document.getElementById(DvelopmentTarget);
+					var div2 = document.createElement("label");
+					div2.innerText = "excel字段名";
+					div.appendChild(div2);
+					var div0 = document.createElement("span");
+					div0.setAttribute("style", "margin-right:24px;");
+					div.appendChild(div0);
+					var div3 = document.createElement("label");
+					div3.innerText = "数据库字段名";
+					div.appendChild(div3);
+					var div0 = document.createElement("span");
+					div0.setAttribute("style", "margin-right:10px;");
+					div.appendChild(div0);
+					var div3_1 = document.createElement("label");
+					div3_1.innerText = "字段类型";
+					div.appendChild(div3_1);
+					var div0 = document.createElement("span");
+					div0.setAttribute("style", "margin-right:10px;");
+					div.appendChild(div0);
+					var div4 = document.createElement("label");
+					div4.innerText = "重复";
+					div.appendChild(div4);
+					var div5 = document.createElement("label");
+					var div0 = document.createElement("span");
+					div0.setAttribute("style", "margin-right:10px;");
+					div.appendChild(div0);
+					div5.innerText = "hash值";
+					div.appendChild(div5);
+					var div5 = document.createElement("label");
+					var div0 = document.createElement("span");
+					div0.setAttribute("style", "margin-right:20px;");
+					div.appendChild(div0);
+					div5.innerText = "关联表";
+					div.appendChild(div5);
+					var div6 = document.createElement("label");
+					var div0 = document.createElement("span");
+					div0.setAttribute("style", "margin-right:30px;");
+					div.appendChild(div0);
+					div6.innerText = "关联列名";
+					div.appendChild(div6);
+					for (var n = 0; n < data.length; n++) {
+						//获取div  
+						var div = document.getElementById(DvelopmentTarget);
+
+						var div2 = document.createElement("div");
+						//换行  
+						var br = document.createElement("br");
+						div.appendChild(br);
+
+						//添加label ，存放指标名称  
+						var select = document.createElement("select");
+						var currentTarger = DvelopmentTarget + n;
+						select.setAttribute("id", currentTarger);
+						var currentData = data[n];
+						for(k in currentData){
+							console.log();
+						}
+						console.log("currentData ="+currentData );
+						select.setAttribute("onchange", "gradeSelect('"
+								+ tableName + "','column','" + currentTarger
+								+ "','" + currentData.colName + "')");
+
+						var option = document.createElement("option");
+						option.innerHTML = " ";
+						option.setAttribute("value", "");
+						select.appendChild(option);
+						for (var i = 0; i < exceldata.length; i++) {
+							var option = document.createElement("option");
+							option.innerHTML = exceldata[i];
+							option.setAttribute("value", i);
+							select.appendChild(option);
+						}
+						div2.appendChild(select);
+
+						var div0 = document.createElement("span");
+						div0.setAttribute("style", "margin-right:2px;");
+						div2.appendChild(div0);
+
+						//添加text ，存放指标权重  
+						var input = document.createElement("input");
+						input.setAttribute('type', 'text');
+						input.setAttribute('ReadOnly', 'True'); //设置文本为只读类型  
+						var rsmd=data[n];
+						input.value = rsmd.colName;
+						input.setAttribute("size", "10");
+						div2.appendChild(input);
+
+						var div0 = document.createElement("span");
+						div0.setAttribute("style", "margin-right:2px;");
+						div2.appendChild(div0);
+
+						//添加text ，存放指标权重  
+						var input = document.createElement("input");
+						input.setAttribute('type', 'text');
+						input.setAttribute('ReadOnly', 'True'); //设置文本为只读类型  
+						var rsmd=data[n];
+						input.value = rsmd.type;
+						if(rsmd.type=="int identity")
+							div2.setAttribute("style", "border:2px solid #F00");
+						input.setAttribute("size", "5");
+						div2.appendChild(input);
+
+						
+						var div0 = document.createElement("span");
+						div0.setAttribute("style", "margin-right:5px;");
+						div2.appendChild(div0);
+
+						//添加label ，存放指标名称  
+						var selectvalue = document.createElement("select");
+						var currentTargervalue = DvelopmentTarget + "_value"
+								+ n;
+						selectvalue.setAttribute("id", currentTargervalue);
+						selectvalue.setAttribute("onchange", "gradeSelectvalue('"
+								+ tableName + "','valuetype','"
+								+ currentTargervalue + "','" + currentData.colName
+								+ "')");
+
+						var option = document.createElement("option");
+						option.innerHTML = "重复";
+						option.setAttribute("value", 0);
+						selectvalue.appendChild(option);
+						var option = document.createElement("option");
+						option.innerHTML = "不重复";
+						option.setAttribute("value", 1);
+						selectvalue.appendChild(option);
+						div2.appendChild(selectvalue);
+
+						var div0 = document.createElement("span");
+						div0.setAttribute("style", "margin-right:15px;");
+						div2.appendChild(div0);
+
+						var checkBox = document.createElement("input");
+						checkBox.setAttribute("type", "checkbox");
+						var currentTargerhash = DvelopmentTarget + "_hash" + n;
+						checkBox.setAttribute("id", currentTargerhash);
+						checkBox.setAttribute("onchange", "gradecheckBox('"
+								+ tableName + "','hash','" + currentTargerhash
+								+ "','" + currentData.colName + "')");
+						div2.appendChild(checkBox);
+
+						var select1 = document.createElement("select");
+						var currentTarger1= DvelopmentTarget +n+ "_foreignTable";
+						select1.setAttribute("id", currentTarger1);
+						
+						var option = document.createElement("option");
+						option.innerHTML = " ";
+						option.setAttribute("value", "");
+						select1.appendChild(option);
+						for (var i = 0; i < allTable.length; i++) {
+							var option = document.createElement("option");
+							option.innerHTML = allTable[i];
+							option.setAttribute("value", allTable[i]);
+							select1.appendChild(option);
+
+						}
+						
+						select1.setAttribute("onchange", "gradeforeignTable('"
+								+ tableName + "','foreignTable','" + currentTarger1
+								+ "','" + currentData.colName + "','" +n+"')");
+						
+						div2.appendChild(select1);
+
+						var select2 = document.createElement("select");
+						var currentTarger2= currentTarger1 + "_foreignKey"+ n;
+						select2.setAttribute("id", currentTarger2);
+											
+						select2.setAttribute("onchange", "gradeforeignKey('"
+								+ tableName + "','foreignKey','" 	
+								+ currentTarger1 + "','" 
+								+ currentTarger2
+								+ "','" + currentData.colName + "')");
+						
+						div2.appendChild(select2);
+						
+						div.appendChild(div2);
+
+					}
+				}
+			}
+		}
+
+		function gradeSelect(tableName, type, DvelopmentTarget, data) {
+			var objS1 = document.getElementById(DvelopmentTarget);
+			var grade1 = objS1.options[objS1.selectedIndex].value;
+			grade1 = encodeURI(encodeURI(grade1));
+			console.log(tableName + "," + type + "," + grade1 + "," + data);
+			var array=new Array();
+			for(var key in parames){
+				if(key==tableName){
+					console.log("parame[key]="+parames[key]);
+					array=parames[key];
+					break;
+				}
+			}
+			var object2=new Object();
+			object2.type=type;
+			object2.value=grade1;
+			object2.column=data;
+			for(var key in data){
+				console.log("key="+key);
+			}
+			parames[tableName]=array;
+			console.log(array.length);
+			for(var i=0;i<array.length; i++){
+				var object=array[i];
+				for(var key in object){
+					console.log("key="+key);
+					if(key=="column"){						
+					   if(object[key]==data){						
+						array.splice(i,1);
+						break;
+					   }
+					}
+				}
+			}
+			array.push(object2);
+			var des = Object.getOwnPropertyDescriptors(parames);
+			console.log(des);
+		}
+
+		function gradecheckBox(tableName, type, DvelopmentTarget, data) {
+			var objS1 = document.getElementById(DvelopmentTarget);
+			var value = objS1.checked;
+			console.log(tableName + "," + type + "," + value + "," + data);
+			var array=new Array();
+			for(var key in parames){
+				if(key==tableName){
+					console.log("parame[key]="+parames[key]);
+					array=parames[key];
+					break;
+				}
+			}
+			var object2=new Object();
+			object2.type=type;
+			object2.value="";
+			object2.column=data;
+			parames[tableName]=array;
+			console.log(array.length);
+			for(var i=0;i<array.length; i++){
+				var object=array[i];
+				for(var key in object){
+					console.log("key="+key);
+					if(key=="column"){						
+					   if(object[key]==data){						
+						array.splice(i,1);
+						break;
+					   }
+					}
+				}
+			}
+			array.push(object2);
+			var des = Object.getOwnPropertyDescriptors(parames);
+			console.log(des);
+		}
+
+		function gradeforeignTable(tableName, type, DvelopmentTarget, data,n) {
+			console.log(DvelopmentTarget);
+			var objS1 = document.getElementById(DvelopmentTarget);
+			console.log(objS1);
+			var grade1 = objS1.options[objS1.selectedIndex].value;
+			grade1 = encodeURI(encodeURI(grade1));
+			console.log(tableName + "," + type + "," + grade1 + "," + data);
+			var xhr = new XMLHttpRequest();
+			xhr.open("get", "/voucher/excel/getTableColumns.do?tableName="+ grade1, true);
+			xhr.send();
+			xhr.onreadystatechange = function() {
+				if (xhr.readyState == 4 && xhr.status == 200) {
+					var b = JSON.parse(xhr.responseText);
+					var data = b.body;
+					var select1 = document.createElement("select");
+					console.log(DvelopmentTarget + n);
+					var select1= document.getElementById(DvelopmentTarget + "_foreignKey"+ n);
+					select1.innerHTML=null;
+					var option = document.createElement("option");
+					option.innerHTML = " ";
+					option.setAttribute("value", "");
+					console.log(data);
+					var option = document.createElement("option");
+					option.innerHTML = "";						
+					option.setAttribute("value", "");
+					select1.appendChild(option);
+					for (var i = 0; i < data.length; i++) {
+						var option = document.createElement("option");
+						var rsmd=data[i];
+						option.innerHTML = rsmd.colName;						
+						option.setAttribute("value", rsmd.colName);
+						select1.appendChild(option);
+					}
+					
+				}
+			}
+			
+						
+			var array=new Array();
+			for(var key in parames){
+				if(key==tableName){
+					console.log("parame[key]="+parames[key]);
+					array=parames[key];
+					break;
+				}
+			}
+			
+			parames[tableName]=array;
+			console.log(array.length);
+			for(var i=0;i<array.length; i++){
+				var object=array[i];
+				for(var key in object){
+					console.log("key="+key);
+					if(key=="column"){						
+					   if(object[key]==data){	
+							object.foreignTable=grade1;
+							array.splice(i,1);
+							array.push(object);
+							return;
+					   }
+					}
+				}
+			}
+
+		}
+		
+		function gradeforeignKey(tableName,foreignKey, DvelopmentTarget0,DvelopmentTarget, data) {
+			console.log(DvelopmentTarget0);
+			var objS0 = document.getElementById(DvelopmentTarget0);
+			var grade0 = objS0.options[objS0.selectedIndex].value;
+			var objS1 = document.getElementById(DvelopmentTarget);
+			var grade1 = objS1.options[objS1.selectedIndex].value;
+			grade1 = encodeURI(encodeURI(grade1));
+			console.log(tableName + "," + foreignKey + "," + grade1 + "," + data);
+			var foreignTable=grade0;
+			var array=new Array();
+			for(var key in parames){
+				if(key==tableName){
+					console.log("parame[key]="+parames[key]);
+					array=parames[key];
+					break;
+				}
+			}
+			
+			parames[tableName]=array;
+			console.log(array.length);
+			for(var i=0;i<array.length; i++){
+				var object=array[i];
+				for(var key in object){
+					console.log("key="+key);
+					if(key=="column"){						
+					   if(object[key]==data){	
+							object.foreignKey=grade1;
+							array.splice(i,1);
+							array.push(object);
+							return;
+					   }
+					}
+				}
+			}
+
+		}
+		
+		function gradeSelectvalue(tableName, type, DvelopmentTarget, data) {
+			var objS1 = document.getElementById(DvelopmentTarget);
+			var grade1 = objS1.options[objS1.selectedIndex].value;
+			grade1 = encodeURI(encodeURI(grade1));
+			console.log(tableName + "," + type + "," + grade1 + "," + data);
+			var array=new Array();
+			for(var key in parames){
+				if(key==tableName){
+					console.log("parame[key]="+parames[key]);
+					array=parames[key];
+					break;
+				}
+			}
+			
+			parames[tableName]=array;
+			console.log(array.length);
+			for(var i=0;i<array.length; i++){
+				var object=array[i];
+				for(var key in object){
+					console.log("key="+key);
+					if(key=="column"){						
+					   if(object[key]==data){	
+							object.genre=grade1;
+							array.splice(i,1);
+							array.push(object);
+							return;
+					   }
+					}
+				}
+			}
+
+		}
+		
+		function upload() {
+
+			document.getElementById('DvelopmentExcel').innerHTML = "";
+
+			var form = new FormData();
+
+			var fileObj = $("#img_input").prop("files")[0];
+			if (fileObj == null) {
+				alert("请先上传excel文件");
+				return false;
+			}
+			form.append("file", fileObj);// 文件对象
+			// XMLHttpRequest 对象
+			var xhr = new XMLHttpRequest();
+			xhr.open("post", "/voucher/excel/getExcelLabel.do", true);
+			xhr.onload = function() {
+
+			};
+			xhr.send(form);
+			xhr.onreadystatechange = function() {
+				if (xhr.readyState == 4 && xhr.status == 200) {
+					console.log(xhr.responseText);
+					var b = JSON.parse(xhr.responseText);
+					var data = b;
+					exceldata = data;
+					
+					var div = document.getElementById("DvelopmentExcel");
+					
+					var br = document.createElement("br");
+					div.appendChild(br);
+					var br = document.createElement("br");
+					div.appendChild(br);
+					var w=(100/data.length);
+					for (var n = 0; n < data.length; n++) {
+						//获取div  
+						
+						var div1 = document.createElement("div");
+						
+						div1.setAttribute("style","width:"+w+"%;float:left;"); 
+
+						//添加label ，存放指标名称  
+						var div2 = document.createElement("label");
+						div2.innerText = n;
+						div1.appendChild(div2);
+						//添加text ，存放指标权重  
+						var input = document.createElement("input");
+						input.setAttribute('type', 'text');
+						input.setAttribute('ReadOnly', 'True'); //设置文本为只读类型  
+						input.value = data[n];
+						input.setAttribute("size", 10);						
+						div1.appendChild(input);
+						
+						div.appendChild(div1);
+
+					}
+					var div0 = document.createElement("span");
+					div0.setAttribute("style", "margin-right:10px;");
+					div.appendChild(div0);
+				}
+			}
+
+		}
+
+		function www() {
+
+			var fileObj = $("#img_input").prop("files")[0];
+
+			var FileController = "/voucher/excel/intoList.do"; // 接收上传文件的后台地址
+
+			if (fileObj) {
+				// FormData 对象
+				var form = new FormData();
+				form.append("file", fileObj);// 文件对象
+				// XMLHttpRequest 对象
+				var xhr = new XMLHttpRequest();
+				xhr.open("post", FileController, true);
+				xhr.onload = function() {
+
+				};
+				xhr.send(form);
+				xhr.onreadystatechange = function() {
+					if (xhr.readyState == 4 && xhr.status == 200) {
+						var b = xhr.responseText;
+						var data = JSON.parse(b);
+						if (data == 1) {
+
+							console.log(data);
+
+						} else {
+							console.log(data);
+
+						}
+					}
+				};
+			}
+
+		}
+	</script>
+	
+</html>

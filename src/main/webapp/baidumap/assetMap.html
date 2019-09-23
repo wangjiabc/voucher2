@@ -325,7 +325,7 @@
          }
          var pointCollection = new BMap.PointCollection(points, options);  // 初始化PointCollection
 
-         
+         /*
          pointCollection.addEventListener('click', function (e) {
           // alert('单击点的坐标为：' + e.point.lng + ',' + e.point.lat);  // 监听点击事件
           		var xhm=new XMLHttpRequest();
@@ -349,6 +349,7 @@
     	            map.openInfoWindow(infoWindow,new BMap.Point(e.point.lng, e.point.lat)); //开启信息窗口
     	       	
          });
+         */
          map.addOverlay(pointCollection);  // 添加Overlay
   
   addDeck2();
@@ -359,7 +360,8 @@
   	
     	 var points = [];  // 添加海量点数据
          for (var i = 0; i < ticket.length; i++) {
-           points.push(new BMap.Point(ticket[i].lng, ticket[i].lat));
+        	 points.push(new BMap.Point(ticket[i][0], ticket[i][1]));
+           //points.push(new BMap.Point(ticket[i].lng, ticket[i].lat));
          }
          var options = {
              size: BMAP_POINT_SIZE_SMALL,
@@ -368,7 +370,7 @@
          }
          var pointCollection = new BMap.PointCollection(points, options);  // 初始化PointCollection
 
-         
+         /*
          pointCollection.addEventListener('click', function (e) {
           // alert('单击点的坐标为：' + e.point.lng + ',' + e.point.lat);  // 监听点击事件
           		var xhm=new XMLHttpRequest();
@@ -392,6 +394,7 @@
     	            map.openInfoWindow(infoWindow,new BMap.Point(e.point.lng, e.point.lat)); //开启信息窗口
     	       	
          });
+         */
          map.addOverlay(pointCollection);  // 添加Overlay
           
          
@@ -463,7 +466,7 @@
 	/*}
 		*/
 	//让所有点在视野范围内
-	//map.setViewport(pointArray);
+	map.setViewport(pointArray);
     
     }
 	
@@ -490,7 +493,7 @@
    //console.log(points2);
    
 	var pointCollection2 = new BMap.PointCollection(points2, options2);
-  
+  /*
 	 pointCollection2.addEventListener('click', function (e) {
        // alert('单击点的坐标为：' + e.point.lng + ',' + e.point.lat);  // 监听点击事件
        		var xhm=new XMLHttpRequest();
@@ -514,7 +517,7 @@
  	            map.openInfoWindow(infoWindow,new BMap.Point(e.point.lng, e.point.lat)); //开启信息窗口
  	       	
       });
-	
+	*/
 	map.addOverlay(pointCollection2);
    }
    
@@ -559,4 +562,78 @@
         return len;
      }       
 	
+	var xhm=new XMLHttpRequest();
+    xhm.open("GET","../baiduMap/kMeans/getAll.do",false);
+    xhm.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+    xhm.send();
+    var ticket=JSON.parse(xhm.responseText);
+	
+    console.log(ticket);
+
+	var json_data = new Array();
+    
+	var i=0;
+	for(var key in ticket){ 
+		console.log(ticket[key]);
+		json_data[i]=[ticket[key]["centroid"][0],ticket[key]["centroid"][1],
+		              ticket[key]["id"]];
+		i++;
+	}
+
+	var pointArray = new Array();
+	console.log(json_data);
+	for(var i=0;i<json_data.length;i++){
+		var point=new BMap.Point(json_data[i][0], json_data[i][1]);
+		var marker = new BMap.Marker(point); // 创建点
+		map.addOverlay(marker);    //增加点	
+		pointArray[i] = new BMap.Point(json_data[i][0], json_data[i][1]);
+		var _id=json_data[i][2];
+		marker.customData={id:_id};
+		marker.addEventListener("click", addEvent);
+	}
+	
+	map.setViewport(pointArray);
+	
+	function addEvent(e) {
+		var id = e.target.customData.id;
+		//alert("marker的位置是" + p.getPosition().lng + "," + p.getPosition().lat);  
+		alert(id);
+		console.log("id=="+id);
+		var xhm = new XMLHttpRequest();
+			xhm.open("GET", "../baiduMap/kMeans/getAll.do?id="+id, false);
+			xhm.setRequestHeader("Content-type",
+				"application/x-www-form-urlencoded");
+			xhm.send();
+		// alert(xhm.responseText);
+		var ticket=JSON.parse(xhm.responseText);
+		//console.log(ticket["points"]);
+		
+		map.clearOverlays();
+		
+		var json = new Array();
+		
+		var i=0;
+		for(var key in ticket){ 
+			console.log(ticket[key]);
+			json[i]=[ticket[key]["centroid"][0],ticket[key]["centroid"][1],
+			              ticket[key]["id"]];
+			addDeck(ticket[key]["points"]);
+			i++;
+		}
+
+		var pointArray = new Array();
+		console.log("json="+json);
+		for(var i=0;i<json.length;i++){
+			var point=new BMap.Point(json[i][0], json[i][1]);
+			var marker = new BMap.Marker(point); // 创建点
+			map.addOverlay(marker);    //增加点	
+			pointArray[i] = new BMap.Point(json[i][0], json[i][1]);
+			var _id=json[i][2];
+			marker.customData={id:_id};
+			marker.addEventListener("click", addEvent);
+		}
+		
+		map.setViewport(pointArray);
+
+	}
 </script>

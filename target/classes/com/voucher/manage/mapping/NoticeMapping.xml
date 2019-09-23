@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.voucher.manage.mapper.NoticeMapper">
+	<cache eviction="LRU" flushInterval="60000" size="512" readOnly="true" />
+   <resultMap id="BaseResultMap" type="com.voucher.manage.model.Notice">
+        <id column="id" property="id" jdbcType="INTEGER" />
+		<result column="title" property="title" jdbcType="VARCHAR" />
+		<result column="template_Id" property="templateId" jdbcType="VARCHAR" />
+		
+		<!--<result column="location_x" property="locationX" jdbcType="DOUBLE" 
+			/> <result column="location_y" property="locationY" jdbcType="DOUBLE" /> -->
+	</resultMap>
+   
+   
+    <select id="getNoticeList" resultMap="BaseResultMap">
+		select id,title,template_Id from notice
+	</select>
+	
+	
+	<insert id="insertNotice" parameterType="com.voucher.manage.model.Notice">
+		insert into notice (title,template_Id) VALUES (#{title},#{templateId})
+	</insert>
+ 	
+ 	<update id="updateNotice" parameterType="com.voucher.manage.model.Notice">
+ 		update notice set title=#{title},template_Id=#{templateId} where id =#{id};
+ 	</update>
+	
+ 	<delete id="deleteNotice" parameterType="com.voucher.manage.model.Notice">
+ 		DELETE FROM notice WHERE id = #{id};
+ 	</delete>
+ 	
+ 	<select id="selectTemplate" resultMap="BaseResultMap">
+		select id,title,template_Id from notice where title = #{title,jdbcType=VARCHAR}
+	</select>
+</mapper>

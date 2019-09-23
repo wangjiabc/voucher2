@@ -1,25 +1,23 @@
 package voucher;
 
-<<<<<<< HEAD
+
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.defaults.DefaultSqlSessionFactory;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.voucher.manage.mapper.WeiXinMapper;
 import com.voucher.manage.model.WeiXin;
-=======
 import java.util.ArrayList;
 import java.util.List;
 
 import com.rmi.server.entity.ImageData;
 import com.voucher.manage.tools.MyTestUtil;
->>>>>>> 1bcb55cc73926c8ca8de173170efc028e8df4faa
 
 public class WeiXinTest {
 
 	
 	public static void main(String[] args) {
-<<<<<<< HEAD
+
 		ClassPathXmlApplicationContext applicationContext=new ClassPathXmlApplicationContext("spring-mybatis2.xml");		
 		DefaultSqlSessionFactory defaultSqlSessionFactory= (DefaultSqlSessionFactory) applicationContext.getBean("sqlSessionFactory");				
 		SqlSession sqlSession=defaultSqlSessionFactory.openSession();
@@ -29,7 +27,6 @@ public class WeiXinTest {
 		
 		System.out.println(weixin.getUrl());
 
-=======
 		
 		List<ImageData> imageDataList=new ArrayList<>();
 		ImageData imgdata1 = new ImageData();
@@ -41,7 +38,7 @@ public class WeiXinTest {
 		imageDataList.add(imgdata1);
 		imageDataList.add(imgdata2);
 		MyTestUtil.print(imageDataList);
->>>>>>> 1bcb55cc73926c8ca8de173170efc028e8df4faa
+
 	}
 
 }

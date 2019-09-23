@@ -92,6 +92,18 @@ http://www.springframework.org/schema/context
         <property name="jdbcTemplate" ref="jdbcTemplate"></property>
    </bean>
    
+     <bean id="currentDao" class="com.voucher.manage.daoImpl.CurrentDaoImpl">
+        <property name="jdbcTemplate" ref="jdbcTemplate"></property>
+    </bean>
+   
+   	<bean id="excelDao" class="com.voucher.manage.daoImpl.ExcelDAOImpl">
+        <property name="jdbcTemplate" ref="jdbcTemplate"></property>
+    </bean>
+   
+   <bean id="kMeansDao" class="com.voucher.manage.daoImpl.KMeansDAOImpl">
+        <property name="jdbcTemplate" ref="jdbcTemplate"></property>
+    </bean>
+   
    <!-- 配置事务管理器 -->
 	<bean id="transactionManager"
 		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">

@@ -16,7 +16,7 @@ public class Singleton {
 	
 //	public static final String URL = "http://test.lzgtzh.com";
 	
-	public final static String ROOMDATABASE="[TTT]";
+	public final static String ROOMDATABASE="[RoomManage]";
 	
 	//鏈湴鏂囦欢鐩綍
 	public final static String filePath="\\Desktop\\pasoft\\photo";

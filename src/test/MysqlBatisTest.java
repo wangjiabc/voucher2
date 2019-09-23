@@ -8,7 +8,7 @@ public class MysqlBatisTest {
 	
 	public static void main(String[] args) {
 		
-		ClassPathXmlApplicationContext applicationContext=new ClassPathXmlApplicationContext("spring-mybatis.xml");
+		ClassPathXmlApplicationContext applicationContext=new ClassPathXmlApplicationContext("spring-mybatis2.xml");
 		
 		UserService userService=(UserService) applicationContext.getBean("userService");
 		

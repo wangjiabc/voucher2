@@ -42,8 +42,6 @@ import com.voucher.manage.daoModel.Assets.Hidden_Check_Date;
 import com.voucher.manage.daoModel.Assets.Hidden_Neaten_Date;
 import com.voucher.manage.daoModel.TTT.FileSelfBelong;
 import com.voucher.manage.file.ImageFileFactory;
-import com.voucher.manage.redis.Orders;
-import com.voucher.manage.redis.RedisDao;
 import com.voucher.manage.service.AffairService;
 import com.voucher.manage.singleton.Singleton;
 import com.voucher.manage.tools.FileConvect;
